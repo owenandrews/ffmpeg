@@ -1,6 +1,6 @@
 <?php
 
-namespace OwenAndrews\FFMpeg\Exceptions;
+namespace FFMpeg\Exceptions;
 
 use Symfony\Component\Process\Exception\ProcessFailedException as Exception;
 

@@ -1,7 +1,7 @@
 <?php
 
-use OwenAndrews\FFMpeg\FFProbe;
-use OwenAndrews\FFMpeg\Stream;
+use FFMpeg\FFProbe;
+use FFMpeg\Stream;
 
 beforeEach(function () {
     $this->ffprobe = new FFProbe(__DIR__.'/../static/video.mp4');

@@ -1,8 +1,7 @@
 <?php
 
-namespace OwenAndrews\FFMpeg;
+namespace FFMpeg;
 
-use Pest\Support\Str;
 use Symfony\Component\Process\Process;
 
 class FFProbe {

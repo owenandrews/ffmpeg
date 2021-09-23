@@ -1,33 +1,38 @@
 <?php
 
-namespace OwenAndrews\FFMpeg;
+namespace FFMpeg;
 
 use Exception;
-use OwenAndrews\FFMpeg\Exceptions\CancelProcessException;
-use OwenAndrews\FFMpeg\Exceptions\ProcessFailedException;
+use FFMpeg\Exceptions\CancelProcessException;
+use FFMpeg\Exceptions\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
 class FFMpeg {
     protected $parameters = [];
-    protected $inputs = [];
-    protected $outputs = [];
     protected $progress;
     protected $timeout = 60;
+    public $inputs = [];
+    public $outputs = [];
 
     public function input(string | Input $input): Input
     {
         if ($input instanceof Input) {
+            $input->ffmpeg = $this;
             $this->inputs[] = $input;
         } else {
-            $input = new Input($this, $input);
+            $input = new Input($input);
+            $input->ffmpeg = $this;
             $this->inputs[] = $input;
         }
 
         return $input;
     }
 
-    public function params(array $parameters = []): self
+    public function params(array | null $parameters): self
     {
+        // Allow null to passed and ignored
+        if (!$parameters) return $this;
+
         $this->parameters = array_merge($parameters, $this->parameters);
 
         return $this;
@@ -36,9 +41,11 @@ class FFMpeg {
     public function output(string | Output $output): Output
     {
         if ($output instanceof Output) {
+            $output->ffmpeg = $this;
             $this->outputs[] = $output;
         } else {
-            $output = new Output($this, $output);
+            $output = new Output($output);
+            $output->ffmpeg = $this;
             $this->outputs[] = $output;
         }
 
@@ -82,7 +89,7 @@ class FFMpeg {
         return array_merge($this->parameters, $inputs, $outputs);
     }
 
-    protected function processOutput(string $buffer, float | int $duration)
+    protected function processOutput(string $buffer, float | int $duration): void
     {   
         $matches = [];
 

@@ -1,6 +1,6 @@
 <?php
 
-use OwenAndrews\FFMpeg\Timecode;
+use FFMpeg\Timecode;
 
 it('can be constructed', function () {
     $timecode = new Timecode(1, 2, 3, 4);

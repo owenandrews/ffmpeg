@@ -1,7 +1,15 @@
 <?php
 
-use OwenAndrews\FFMpeg\FFMpeg;
-use OwenAndrews\FFMpeg\Input;
+use FFMpeg\FFMpeg;
+use FFMpeg\Input;
+
+beforeAll(function () {
+    if (is_dir(__DIR__."/../tmp")) {
+        array_map('unlink', glob(__DIR__."/../tmp/*.*"));
+    } else {
+        mkdir(__DIR__."/../tmp");   
+    }
+});
 
 beforeEach(function () {
     $this->input = __DIR__.'/../static/video.mp4';
@@ -13,8 +21,10 @@ it('can add input as string', function () {
 });
 
 it('can add input as instance', function () {
-    $input = new Input($this->ffmpeg, $this->input);
+    $input = new Input($this->input);
     expect($this->ffmpeg->input($input))->toBe($input);
+    expect($this->ffmpeg->inputs[0])->toBe($input);
+    expect($input->ffmpeg)->toBe($this->ffmpeg);
 });
 
 it('can add input params', function () {
@@ -31,6 +41,6 @@ it('has correct duration', function () {
 
 it('can output video', function () {
     $this->ffmpeg->input($this->input);
-    $this->ffmpeg->output(__DIR__.'/../static/video-out.mp4');
+    $this->ffmpeg->output(__DIR__.'/../tmp/video-out.mp4');
     $this->ffmpeg->run();
 });

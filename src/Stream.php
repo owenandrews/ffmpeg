@@ -1,6 +1,6 @@
 <?php
 
-namespace OwenAndrews\FFMpeg;
+namespace FFMpeg;
 
 use Exception;
 use FFMpeg\Exceptions\InvalidArgumentException;

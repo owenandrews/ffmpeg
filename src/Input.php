@@ -1,6 +1,6 @@
 <?php
 
-namespace OwenAndrews\FFMpeg;
+namespace FFMpeg;
 
 class Input {
     public $ffmpeg;
@@ -9,9 +9,8 @@ class Input {
     public $format;
     public $path;
 
-    public function __construct(FFMpeg $ffmpeg, string $path)
+    public function __construct(string $path)
     {
-        $this->ffmpeg = $ffmpeg;
         $this->path = $path;
         
         $probe = new FFProbe($path);
@@ -63,15 +62,20 @@ class Input {
         return $this->parameters[$index + 1];
     }
 
-    public function params($parameters = []): self
+    public function params(array | null $parameters): self
     {
+        // Allow null to be passed and ignored
+        if (!$parameters) return $this;
+
         $this->parameters = array_merge($parameters, $this->parameters);
 
         return $this;
     }
 
-    public function __call(string $func, array $arguments)
+    // If the parent FFMpeg instance is set, proxy mehtod calls back to it to allow for chaining.
+    public function __call(string $method, array $arguments)
     {
-        return call_user_func([$this->ffmpeg, $func], ...$arguments);
+        if (!$this->ffmpeg) throw new \Exception(sprintf("Call to undefined method %s::%s()", __CLASS__, $method));
+        return call_user_func([$this->ffmpeg, $method], ...$arguments);
     }
 }
