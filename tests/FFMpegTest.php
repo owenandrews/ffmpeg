@@ -28,3 +28,9 @@ it('has correct duration', function () {
     expect($input->duration())->toEqual(2.176);
     expect($clippedInput->duration())->toEqual(1);
 });
+
+it('can output video', function () {
+    $this->ffmpeg->input($this->input);
+    $this->ffmpeg->output(__DIR__.'/../static/video-out.mp4');
+    $this->ffmpeg->run();
+});

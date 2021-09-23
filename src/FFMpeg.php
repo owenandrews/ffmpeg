@@ -106,7 +106,7 @@ class FFMpeg {
 
         $process->wait(function ($type, $buffer) use (&$duration, &$process) {
             // FFMpeg sends all logging over stderr
-            if ($type === Process::STDERR) {
+            if ($type === Process::ERR) {
                 try {
                     $this->processOutput($buffer, $duration);
                 } catch (CancelProcessException $e) {
