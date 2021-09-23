@@ -1,4 +1,18 @@
 {
+    "name": "owenandrews/ffmpeg",
+    "type": "library",
+    "description": "Simple library for using FFMpeg in PHP",
+    "keywords": ["ffmpeg"],
+    "homepage": "https://github.com/owenandrews/ffmpeg",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Owen Andrews",
+            "email": "owen@owenandre.ws",
+            "homepage": "http://owenandre.ws",
+            "role": "Developer"
+        }
+    ],
     "require": {
         "php": ">=8.0",
         "symfony/process": "^5.3"
