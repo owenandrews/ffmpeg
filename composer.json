@@ -1,0 +1,14 @@
+{
+    "require": {
+        "php": ">=8.0",
+        "symfony/process": "^5.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "FFMpeg\\": "src/"
+        }
+    },
+    "require-dev": {
+        "pestphp/pest": "^1.18"
+    }
+}
