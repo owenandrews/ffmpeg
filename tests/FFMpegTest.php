@@ -1,7 +1,7 @@
 <?php
 
-use FFMpeg\FFMpeg;
-use FFMpeg\Input;
+use OwenAndrews\FFMpeg\FFMpeg;
+use OwenAndrews\FFMpeg\Input;
 
 beforeEach(function () {
     $this->input = __DIR__.'/../static/video.mp4';

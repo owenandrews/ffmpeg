@@ -1,10 +1,10 @@
 <?php
 
-namespace FFMpeg;
+namespace OwenAndrews\FFMpeg;
 
 use Exception;
-use FFMpeg\Exceptions\CancelProcessException;
-use FFMpeg\Exceptions\ProcessFailedException;
+use OwenAndrews\FFMpeg\Exceptions\CancelProcessException;
+use OwenAndrews\FFMpeg\Exceptions\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
 class FFMpeg {

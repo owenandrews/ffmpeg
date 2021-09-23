@@ -1,6 +1,6 @@
 <?php
 
-namespace FFMpeg\Exceptions;
+namespace OwenAndrews\FFMpeg\Exceptions;
 
 use Exception;
 

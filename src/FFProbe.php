@@ -1,6 +1,6 @@
 <?php
 
-namespace FFMpeg;
+namespace OwenAndrews\FFMpeg;
 
 use Pest\Support\Str;
 use Symfony\Component\Process\Process;
