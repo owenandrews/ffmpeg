@@ -2,7 +2,6 @@
 
 namespace FFMpeg;
 
-use Exception;
 use FFMpeg\Exceptions\CancelProcessException;
 use FFMpeg\Exceptions\ProcessFailedException;
 use Symfony\Component\Process\Process;
@@ -55,7 +54,7 @@ class FFMpeg {
     public function duration(): float
     {
         if (!count($this->inputs)) {
-            throw new Exception("No input streams.");
+            throw new \Exception("No input streams.");
         }
 
         return array_reduce($this->inputs, function($duration, Input $input) {
