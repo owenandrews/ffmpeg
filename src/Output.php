@@ -33,7 +33,7 @@ class Output {
         // Allow null to be passed and ignored
         if (!$parameters) return $this;
 
-        $this->parameters = array_merge($parameters, $this->parameters);
+        $this->parameters = array_merge(array_filter($parameters, fn($p) => $p), $this->parameters);
 
         return $this;
     }

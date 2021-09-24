@@ -5,6 +5,18 @@ use FFMpeg\FFProbe;
 use FFMpeg\Input;
 use Symfony\Component\Filesystem\Filesystem;
 
+beforeAll(function () {
+    $filesystem = new Filesystem();
+    $tmpDir = __DIR__."/../tmp";
+
+    if ($filesystem->exists($tmpDir)) {
+        $filesystem->remove($tmpDir);
+        $filesystem->mkdir($tmpDir);
+    } else {
+        $filesystem->mkdir($tmpDir);
+    }
+});
+
 beforeEach(function () {
     $this->input = __DIR__.'/../static/video.mp4';
     $this->ffmpeg = new FFMpeg();
