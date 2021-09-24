@@ -88,7 +88,7 @@ class FFMpeg {
         return array_merge($this->parameters, $inputs, $outputs);
     }
 
-    protected function processOutput(string $buffer, float | int $duration): void
+    protected function processOutput(string $buffer, float | int $duration, Process $process): void
     {   
         $matches = [];
 
@@ -97,7 +97,7 @@ class FFMpeg {
             $progress = ($currentTime->toSeconds() / $duration) * 100;
 
             if ($this->progress) {
-                call_user_func($this->progress, $progress);
+                call_user_func($this->progress, $progress, $process);
             }
         }
     }
@@ -113,11 +113,7 @@ class FFMpeg {
         $process->wait(function ($type, $buffer) use (&$duration, &$process) {
             // FFMpeg sends all logging over stderr
             if ($type === Process::ERR) {
-                try {
-                    $this->processOutput($buffer, $duration);
-                } catch (CancelProcessException $e) {
-                    $process->stop(0);
-                }
+                $this->processOutput($buffer, $duration, $process);
             }
         });
 
