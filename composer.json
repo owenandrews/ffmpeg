@@ -23,6 +23,7 @@
         }
     },
     "require-dev": {
-        "pestphp/pest": "^1.18"
+        "pestphp/pest": "^1.18",
+        "symfony/filesystem": "^5.3"
     }
 }

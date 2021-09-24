@@ -24,6 +24,8 @@
 |
 */
 
+use Symfony\Component\Filesystem\Filesystem;
+
 expect()->extend('toBeOne', function () {
     return $this->toBe(1);
 });
@@ -43,3 +45,16 @@ function something()
 {
     // ..
 }
+
+// Setup tmp directory before every test run
+beforeAll(function () {
+    $filesystem = new Filesystem();
+    $tmpDir = __DIR__."/../tmp";
+
+    if ($filesystem->exists($tmpDir)) {
+        $filesystem->remove($tmpDir);
+        $filesystem->mkdir($tmpDir);
+    } else {
+        $filesystem->mkdir($tmpDir);
+    }
+});

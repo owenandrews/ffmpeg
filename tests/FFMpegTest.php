@@ -1,15 +1,9 @@
 <?php
 
 use FFMpeg\FFMpeg;
+use FFMpeg\FFProbe;
 use FFMpeg\Input;
-
-beforeAll(function () {
-    if (is_dir(__DIR__."/../tmp")) {
-        array_map('unlink', glob(__DIR__."/../tmp/*.*"));
-    } else {
-        mkdir(__DIR__."/../tmp");   
-    }
-});
+use Symfony\Component\Filesystem\Filesystem;
 
 beforeEach(function () {
     $this->input = __DIR__.'/../static/video.mp4';
@@ -40,7 +34,22 @@ it('has correct duration', function () {
 });
 
 it('can output video', function () {
+    $filesystem = new Filesystem();
+    $output = __DIR__.'/../tmp/video-out.mp4';
     $this->ffmpeg->input($this->input);
-    $this->ffmpeg->output(__DIR__.'/../tmp/video-out.mp4');
+    $this->ffmpeg->output($output)
+        ->params([
+            '-ss', '1',
+            '-t', '1',
+            '-vf', 'scale=100:-2'
+        ]);
     $this->ffmpeg->run();
+
+    expect($filesystem->exists($output))->toBeTrue();
+
+    // Assert correct filters were applied
+    $file = new FFProbe($output);
+    expect($file->video()->width)->toEqual(100);
+    expect($file->video()->height)->toEqual(56);
+    expect((int) $file->video()->duration)->toEqual(1);
 });
